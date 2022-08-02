@@ -1,12 +1,12 @@
 package com.hmdp.service.impl;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hmdp.Exception.CastException;
 import com.hmdp.constant.ShopCode;
 import com.hmdp.dto.Result;
-import com.hmdp.entity.TradeCoupon;
-import com.hmdp.entity.TradeGoods;
-import com.hmdp.entity.TradeOrder;
-import com.hmdp.entity.User;
+import com.hmdp.entity.*;
+import com.hmdp.mapper.BlogMapper;
 import com.hmdp.mapper.TradeOrderMapper;
 import com.hmdp.service.ICouponService;
 import com.hmdp.service.IGoodsService;
@@ -31,7 +31,7 @@ import java.util.Date;
 @Slf4j
 @Component
 @Service
-public class OrderServiceImpl implements IOrderService {
+public class OrderServiceImpl extends ServiceImpl<TradeOrderMapper, TradeOrder> implements IOrderService {
 
     @Resource
     private IUserService userService;
@@ -43,14 +43,31 @@ public class OrderServiceImpl implements IOrderService {
     private IDWorker idWorker;
     @Resource
     private ICouponService couponService;
-    @Resource
-    private TradeOrderMapper orderMapper;
 
     @Override
     public Result confirmOrder(TradeOrder order) {
         return null;
     }
 
+
+
+    /**
+     * 扣减库存
+     * @param order
+     */
+    //TODO 这个方法有可能需要加锁，
+    // 两个线程同时扣减库存的时候，可能会导致并发问题
+    private void reduceGoodsNum(TradeOrder order) {
+        TradeGoodsNumberLog goodsNumberLog = new TradeGoodsNumberLog();
+        goodsNumberLog.setOrderId(order.getOrderId());
+        goodsNumberLog.setGoodsId(order.getGoodsId());
+        goodsNumberLog.setGoodsNumber(order.getGoodsNumber());
+        Result result = goodsService.reduceGoodsNum(goodsNumberLog);
+        if(result.getSuccess().equals(ShopCode.SHOP_FAIL.getSuccess())){
+            CastException.cast(ShopCode.SHOP_REDUCE_GOODS_NUM_FAIL);
+        }
+        log.info("订单:"+order.getOrderId()+"扣减库存成功");
+    }
 
     /**
      * 生成预订单
@@ -61,15 +78,20 @@ public class OrderServiceImpl implements IOrderService {
         //1.设置订单状态为不可见
         order.setOrderStatus(ShopCode.SHOP_ORDER_NO_CONFIRM.getCode());
         //2.订单ID
+        //利用雪花算法生成的随机id
         order.setOrderId(idWorker.nextId());
         //核算运费是否正确
+        //TODO 这里核算运费单纯根据订单的价格,应该改为根据重量路程和订单价格的比
         BigDecimal shippingFee = calculateShippingFee(order.getOrderAmount());
+        //这里主要是计算订单运费和设置的订单运费是否一样
         if (order.getShippingFee().compareTo(shippingFee) != 0) {
             CastException.cast(ShopCode.SHOP_ORDER_SHIPPINGFEE_INVALID);
         }
         //3.计算订单总价格是否正确
+        //TODO 这里商品数量*商品价格得到的订单价格,需要进行调整,后续可能需要加入购物车的功能
         BigDecimal orderAmount = order.getGoodsPrice().multiply(new BigDecimal(order.getGoodsNumber()));
         orderAmount.add(shippingFee);
+        //计算一下算出来的总价和订单价格是否一样
         if (orderAmount.compareTo(order.getOrderAmount()) != 0) {
             CastException.cast(ShopCode.SHOP_ORDERAMOUNT_INVALID);
         }
@@ -77,22 +99,26 @@ public class OrderServiceImpl implements IOrderService {
         //4.判断优惠券信息是否合法
         Long couponId = order.getCouponId();
         if (couponId != null) {
+            //通过优惠券id获取到优惠券
             TradeCoupon coupon = couponService.findOne(couponId);
             //优惠券不存在
             if (coupon == null) {
                 CastException.cast(ShopCode.SHOP_COUPON_NO_EXIST);
             }
-            //优惠券已经使用
+            //优惠券已经使用，优惠券已经使用就是所谓的code值=1
             if ((ShopCode.SHOP_COUPON_ISUSED.getCode().toString())
                     .equals(coupon.getIsUsed().toString())) {
                 CastException.cast(ShopCode.SHOP_COUPON_INVALIED);
             }
+            //如果优惠券没用,那就把优惠券的单价设置到订单中
             order.setCouponPaid(coupon.getCouponPrice());
         } else {
+            //没使用优惠券的话,就设置订单价格为0
             order.setCouponPaid(BigDecimal.ZERO);
         }
 
         //5.判断余额是否正确
+        //这里主要是处理用余额支付的情况,主要支付宝支付接口接入不进来,没办法申请到api
         BigDecimal moneyPaid = order.getMoneyPaid();
         if (moneyPaid != null) {
             //比较余额是否大于0
@@ -108,7 +134,7 @@ public class OrderServiceImpl implements IOrderService {
                 if (user == null) {
                     CastException.cast(ShopCode.SHOP_USER_NO_EXIST);
                 }
-                //比较余额是否大于用户账户余额
+                //比较订单价格是否大于用户账户余额
                 if (user.getUserMoney().compareTo(order.getMoneyPaid().longValue()) == -1) {
                     CastException.cast(ShopCode.SHOP_MONEY_PAID_INVALID);
                 }
@@ -124,7 +150,7 @@ public class OrderServiceImpl implements IOrderService {
         order.setAddTime(new Date());
 
         //保存预订单
-        int r = orderMapper.insert(order);
+        int r = baseMapper.insert(order);
         if (ShopCode.SHOP_SUCCESS.getCode() != r) {
             CastException.cast(ShopCode.SHOP_ORDER_SAVE_ERROR);
         }

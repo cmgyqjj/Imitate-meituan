@@ -1,5 +1,10 @@
 package com.hmdp.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -9,6 +14,10 @@ import java.util.Date;
  * @date:{2022}
  * @description:商品类
  **/
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("trade_goods")
 public class TradeGoods implements Serializable {
     private Long goodsId;
 

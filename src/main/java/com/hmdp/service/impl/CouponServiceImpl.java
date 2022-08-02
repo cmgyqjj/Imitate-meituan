@@ -1,10 +1,13 @@
 package com.hmdp.service.impl;
 
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hmdp.Exception.CastException;
 import com.hmdp.constant.ShopCode;
 import com.hmdp.dto.Result;
+import com.hmdp.entity.Blog;
 import com.hmdp.entity.TradeCoupon;
+import com.hmdp.mapper.BlogMapper;
 import com.hmdp.mapper.TradeCouponMapper;
 import com.hmdp.service.ICouponService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Component
 @Service
-public class CouponServiceImpl implements ICouponService {
+public class CouponServiceImpl extends ServiceImpl<TradeCouponMapper, TradeCoupon> implements ICouponService {
 
     @Autowired
     private TradeCouponMapper couponMapper;
