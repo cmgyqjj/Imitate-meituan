@@ -1,5 +1,7 @@
 package com.hmdp.service.impl;
 
+import com.hmdp.Exception.CastException;
+import com.hmdp.constant.ShopCode;
 import com.hmdp.dto.Result;
 import com.hmdp.entity.TradeOrder;
 import com.hmdp.service.IOrderService;
@@ -29,5 +31,34 @@ public class OrderServiceImpl implements IOrderService {
 
 
 
+
+    private void checkOrder(TradeOrder order) {
+        //1.校验订单是否存在
+        if (order == null) {
+            CastException.cast(ShopCode.SHOP_ORDER_INVALID);
+        }
+        //2.校验订单中的商品是否存在
+        // TODO 这几个位置可以稍微缓存一下，不用去查数据库
+        TradeGoods goods = goodsService.findOne(order.getGoodsId());
+        if (goods == null) {
+            CastException.cast(ShopCode.SHOP_GOODS_NO_EXIST);
+        }
+        //3.校验下单用户是否存在
+        TradeUser user = userService.findOne(order.getUserId());
+        if (user == null) {
+            CastException.cast(ShopCode.SHOP_USER_NO_EXIST);
+        }
+        //4.校验商品单价是否合法
+        if (order.getGoodsPrice().compareTo(goods.getGoodsPrice()) != 0) {
+            CastException.cast(ShopCode.SHOP_GOODS_PRICE_INVALID);
+        }
+        //5.校验订单商品数量是否合法
+        if (order.getGoodsNumber() >= goods.getGoodsNumber()) {
+            CastException.cast(ShopCode.SHOP_GOODS_NUM_NOT_ENOUGH);
+        }
+
+        log.info("校验订单通过");
+
+    }
 }
 
