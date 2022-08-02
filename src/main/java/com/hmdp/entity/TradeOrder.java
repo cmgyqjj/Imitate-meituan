@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * @author:{QJJ}
+ * @date:{2022}
+ * @description:订单类
+ **/
 public class TradeOrder implements Serializable {
     private Long orderId;
 

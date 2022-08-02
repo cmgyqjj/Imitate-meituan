@@ -3,14 +3,19 @@ package com.hmdp.service.impl;
 import com.hmdp.Exception.CastException;
 import com.hmdp.constant.ShopCode;
 import com.hmdp.dto.Result;
+import com.hmdp.entity.TradeGoods;
 import com.hmdp.entity.TradeOrder;
+import com.hmdp.entity.User;
+import com.hmdp.service.IGoodsService;
 import com.hmdp.service.IOrderService;
+import com.hmdp.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -23,6 +28,12 @@ import java.util.Date;
 @Component
 @Service
 public class OrderServiceImpl implements IOrderService {
+
+    @Resource
+    private IUserService userService;
+
+    @Resource
+    private IGoodsService goodsService;
 
     @Override
     public Result confirmOrder(TradeOrder order) {
@@ -44,7 +55,7 @@ public class OrderServiceImpl implements IOrderService {
             CastException.cast(ShopCode.SHOP_GOODS_NO_EXIST);
         }
         //3.校验下单用户是否存在
-        TradeUser user = userService.findOne(order.getUserId());
+        User user = userService.getById(order.getUserId());
         if (user == null) {
             CastException.cast(ShopCode.SHOP_USER_NO_EXIST);
         }
