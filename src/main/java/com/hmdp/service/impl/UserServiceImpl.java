@@ -6,6 +6,7 @@ import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.Query;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hmdp.Exception.BadRequestException;
 import com.hmdp.dto.LoginFormDTO;
 import com.hmdp.dto.Result;
 import com.hmdp.dto.UserDTO;
@@ -73,6 +74,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return Result.ok();
     }
 
+
     @Override
     public Result sign() {
 //        获取当前登录的用户
@@ -126,6 +128,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return Result.ok(count);
     }
 
+    /**
+     * 登出用户
+     * @param token
+     * @return
+     */
+    @Override
+    public Result logout(String token) {
+        if(token==null||token==""){
+            throw new BadRequestException("错误的token");
+        }
+        stringRedisTemplate.opsForHash().delete(LOGIN_USER_KEY+token);
+        return Result.ok();
+    }
+
     @Override
     public Result login(LoginFormDTO loginForm, HttpSession session) {
 
@@ -171,6 +187,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return Result.ok(token);
     }
 
+
+
     private User createUserWithPhone(String phone) {
 
         // 1.创建用户
@@ -182,5 +200,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         save(user);
         return user;
     }
+
 
 }

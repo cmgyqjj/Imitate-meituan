@@ -35,6 +35,7 @@ public class UserController {
     @Resource
     private IUserInfoService userInfoService;
 
+
     /**
      * 发送手机验证码
      */
@@ -58,9 +59,9 @@ public class UserController {
      * @return 无
      */
     @PostMapping("/logout")
-    public Result logout(){
+    public Result logout(@PathVariable("token")String token){
         // TODO 实现登出功能
-        return Result.fail("功能未完成");
+        return userService.logout(token);
     }
 
     @GetMapping("/me")
@@ -105,5 +106,20 @@ public class UserController {
     @GetMapping("/sign/count")
     public Result signCount(){
         return userService.signCount();
+    }
+
+    /**
+     * 查询单个用户的用户信息
+     * @param userId
+     * @return
+     */
+    @GetMapping("/{id}")
+    public Result queryUserInfoById(@PathVariable("id") Long userId){
+        UserInfo userInfo = userInfoService.getById(userId);
+        if(userInfo==null){
+            return Result.ok();
+        }
+        UserDTO userDTO= BeanUtil.copyProperties(userInfo,UserDTO.class);
+        return Result.ok(userDTO);
     }
 }

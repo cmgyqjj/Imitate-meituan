@@ -37,6 +37,7 @@ com\hmdp\service\impl\SeckillVoucherServiceImpl.class
 com\hmdp\mapper\ShopMapper.class
 com\hmdp\service\impl\VoucherServiceImpl.class
 com\hmdp\utils\PasswordEncoder.class
+com\hmdp\config\RedisHandler.class
 com\hmdp\mapper\VoucherOrderMapper.class
 com\hmdp\entity\BlogComments.class
 com\hmdp\controller\VoucherOrderController.class

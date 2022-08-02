@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -61,6 +62,16 @@ public class User implements Serializable {
      * 更新时间
      */
     private LocalDateTime updateTime;
+
+    /**
+     * 积分
+     */
+    private Integer userScore;
+    /**
+     * 用户余额
+     */
+    private Long userMoney;
+
 
 
 }
