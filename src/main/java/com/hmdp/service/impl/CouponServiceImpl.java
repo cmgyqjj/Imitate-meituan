@@ -19,8 +19,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CouponServiceImpl extends ServiceImpl<TradeCouponMapper, TradeCoupon> implements ICouponService {
 
-    @Autowired
-    private TradeCouponMapper couponMapper;
 
     /**
      * 通过优惠券id查找优惠券

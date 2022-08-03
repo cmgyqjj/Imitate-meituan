@@ -1,5 +1,6 @@
 package com.hmdp.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hmdp.Exception.CastException;
@@ -14,6 +15,11 @@ import com.hmdp.service.IOrderService;
 import com.hmdp.service.IUserService;
 import com.hmdp.utils.IDWorker;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.exception.MQBrokerException;
+import org.apache.rocketmq.client.exception.MQClientException;
+import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.remoting.exception.RemotingException;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -38,12 +44,17 @@ public class OrderServiceImpl extends ServiceImpl<TradeOrderMapper, TradeOrder> 
 
     @Resource
     private IGoodsService goodsService;
+    @Value("${mq.order.topic}")
+    private String topic;
 
+    @Value("${mq.order.tag.cancel}")
+    private String tag;
     @Resource
     private IDWorker idWorker;
     @Resource
     private ICouponService couponService;
-
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
     @Override
     public Result confirmOrder(TradeOrder order) {
         //1.校验订单
@@ -63,17 +74,17 @@ public class OrderServiceImpl extends ServiceImpl<TradeOrderMapper, TradeOrder> 
             return Result.ok(ShopCode.SHOP_SUCCESS.getMessage());
         } catch (Exception e) {
             //1.确认订单失败,发送消息
-//            MQEntity mqEntity = new MQEntity();
-//            mqEntity.setOrderId(orderId);
-//            mqEntity.setUserId(order.getUserId());
-//            mqEntity.setUserMoney(order.getMoneyPaid());
-//            mqEntity.setGoodsId(order.getGoodsId());
-//            mqEntity.setGoodsNum(order.getGoodsNumber());
-//            mqEntity.setCouponId(order.getCouponId());
+            MQEntity mqEntity = new MQEntity();
+            mqEntity.setOrderId(orderId);
+            mqEntity.setUserId(order.getUserId());
+            mqEntity.setUserMoney(order.getMoneyPaid());
+            mqEntity.setGoodsId(order.getGoodsId());
+            mqEntity.setGoodsNum(order.getGoodsNumber());
+            mqEntity.setCouponId(order.getCouponId());
 
             //2.返回订单确认失败消息
             try {
-//                sendCancelOrder(topic,tag,order.getOrderId().toString(), JSON.toJSONString(mqEntity));
+                sendCancelOrder(topic,tag,order.getOrderId().toString(), JSON.toJSONString(mqEntity));
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
@@ -82,17 +93,17 @@ public class OrderServiceImpl extends ServiceImpl<TradeOrderMapper, TradeOrder> 
     }
 
 
-//    /**
-//     * 发送订单确认失败消息
-//     * @param topic
-//     * @param tag
-//     * @param keys
-//     * @param body
-//     */
-//    private void sendCancelOrder(String topic, String tag, String keys, String body) throws InterruptedException, RemotingException, MQClientException, MQBrokerException {
-//        Message message = new Message(topic,tag,keys,body.getBytes());
-//        rocketMQTemplate.getProducer().send(message);
-//    }
+    /**
+     * 发送订单确认失败消息
+     * @param topic
+     * @param tag
+     * @param keys
+     * @param body
+     */
+    private void sendCancelOrder(String topic, String tag, String keys, String body) throws InterruptedException, RemotingException, MQClientException, MQBrokerException {
+        Message message = new Message(topic,tag,keys,body.getBytes());
+        rocketMQTemplate.getProducer().send(message);
+    }
 
     /**
      * 确认订单

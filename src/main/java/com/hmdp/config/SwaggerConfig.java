@@ -38,6 +38,7 @@ public class SwaggerConfig {
                 .version("1.0")
                 .contact(new Contact("qjj", "http://www.baidu.com",
                         "524733312@qq.com"))
+                .termsOfServiceUrl("http://localhost:8083/swagger-ui.html")
                 .build();
     }
 }
