@@ -1,6 +1,7 @@
 package com.hmdp.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hmdp.Exception.CastException;
 import com.hmdp.constant.ShopCode;
@@ -31,8 +32,7 @@ public class CouponServiceImpl extends ServiceImpl<TradeCouponMapper, TradeCoupo
         if(coupouId==null){
             CastException.cast(ShopCode.SHOP_REQUEST_PARAMETER_VALID);
         }
-
-        return couponMapper.selectByPrimaryKey(coupouId);
+        return getById(coupouId);
     }
 
     /**
@@ -46,7 +46,8 @@ public class CouponServiceImpl extends ServiceImpl<TradeCouponMapper, TradeCoupo
             CastException.cast(ShopCode.SHOP_REQUEST_PARAMETER_VALID);
         }
         //更新优惠券状态
-        couponMapper.updateByPrimaryKey(coupon);
+        baseMapper.update(coupon, new QueryWrapper<TradeCoupon>()
+                        .eq("coupon_id",coupon.getCouponId()));
         return Result.ok(ShopCode.SHOP_SUCCESS.getMessage());
     }
 }

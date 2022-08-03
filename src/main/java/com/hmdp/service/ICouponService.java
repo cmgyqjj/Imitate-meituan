@@ -24,5 +24,5 @@ public interface ICouponService extends IService<TradeCoupon> {
      * @param coupon
      * @return
      */
-    Result updateCouponStatus(TradeCoupon coupon);
+    public Result updateCouponStatus(TradeCoupon coupon);
 }

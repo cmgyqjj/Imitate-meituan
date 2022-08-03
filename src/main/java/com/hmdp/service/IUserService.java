@@ -3,6 +3,7 @@ package com.hmdp.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hmdp.dto.LoginFormDTO;
 import com.hmdp.dto.Result;
+import com.hmdp.entity.TradeUserMoneyLog;
 import com.hmdp.entity.User;
 
 import javax.servlet.http.HttpSession;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpSession;
  *  服务类
  * </p>
  *
- * @author 虎哥
+ * @author qjj
  * @since 2021-12-22
  */
 public interface IUserService extends IService<User> {
@@ -26,4 +27,6 @@ public interface IUserService extends IService<User> {
     Result signCount();
 
     Result logout(String token);
+
+    Result updateMoneyPaid(TradeUserMoneyLog userMoneyLog);
 }

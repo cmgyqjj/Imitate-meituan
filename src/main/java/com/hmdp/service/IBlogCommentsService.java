@@ -8,7 +8,7 @@ import com.hmdp.entity.BlogComments;
  *  服务类
  * </p>
  *
- * @author 虎哥
+ * @author qjj
  * @since 2021-12-22
  */
 public interface IBlogCommentsService extends IService<BlogComments> {

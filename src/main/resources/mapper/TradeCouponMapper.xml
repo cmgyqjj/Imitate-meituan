@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.itheima.shop.mapper.TradeCouponMapper" >
-  <resultMap id="BaseResultMap" type="com.itheima.shop.pojo.TradeCoupon" >
+<mapper namespace="com.hmdp.mapper.TradeCouponMapper" >
+  <resultMap id="BaseResultMap" type="com.hmdp.entity.TradeCoupon" >
     <id column="coupon_id" property="couponId" jdbcType="BIGINT" />
     <result column="coupon_price" property="couponPrice" jdbcType="DECIMAL" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
@@ -70,7 +70,7 @@
   <sql id="Base_Column_List" >
     coupon_id, coupon_price, user_id, order_id, is_used, used_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.itheima.shop.pojo.TradeCouponExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmdp.entity.TradeCouponExample" >
     select
     <if test="distinct" >
       distinct
@@ -94,13 +94,13 @@
     delete from trade_coupon
     where coupon_id = #{couponId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.itheima.shop.pojo.TradeCouponExample" >
+  <delete id="deleteByExample" parameterType="com.hmdp.entity.TradeCouponExample" >
     delete from trade_coupon
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.itheima.shop.pojo.TradeCoupon" >
+  <insert id="insert" parameterType="com.hmdp.entity.TradeCoupon" >
     insert into trade_coupon (coupon_id, coupon_price, user_id, 
       order_id, is_used, used_time
       )
@@ -108,7 +108,7 @@
       #{orderId,jdbcType=BIGINT}, #{isUsed,jdbcType=INTEGER}, #{usedTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.itheima.shop.pojo.TradeCoupon" >
+  <insert id="insertSelective" parameterType="com.hmdp.entity.TradeCoupon" >
     insert into trade_coupon
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="couponId != null" >
@@ -151,7 +151,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.itheima.shop.pojo.TradeCouponExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.hmdp.entity.TradeCouponExample" resultType="java.lang.Integer" >
     select count(*) from trade_coupon
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -195,7 +195,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.itheima.shop.pojo.TradeCoupon" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.hmdp.entity.TradeCoupon" >
     update trade_coupon
     <set >
       <if test="couponPrice != null" >
@@ -216,7 +216,7 @@
     </set>
     where coupon_id = #{couponId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.itheima.shop.pojo.TradeCoupon" >
+  <update id="updateByPrimaryKey" parameterType="com.hmdp.entity.TradeCoupon" >
     update trade_coupon
     set coupon_price = #{couponPrice,jdbcType=DECIMAL},
       user_id = #{userId,jdbcType=BIGINT},

@@ -11,9 +11,10 @@ import org.springframework.stereotype.Service;
  *  服务实现类
  * </p>
  *
- * @author 虎哥
- * @since 2021-12-22
- */
+ * @author:{QJJ}
+ * @date:{2022}
+ * @description:
+ **/
 @Service
 public class BlogCommentsServiceImpl extends ServiceImpl<BlogCommentsMapper, BlogComments> implements IBlogCommentsService {
 

@@ -9,7 +9,7 @@ import com.hmdp.entity.Blog;
  *  服务类
  * </p>
  *
- * @author 虎哥
+ * @author qjj
  * @since 2021-12-22
  */
 public interface IBlogService extends IService<Blog> {

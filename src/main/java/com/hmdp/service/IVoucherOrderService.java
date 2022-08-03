@@ -10,7 +10,7 @@ import com.hmdp.entity.VoucherOrder;
  *  服务类
  * </p>
  *
- * @author 虎哥
+ * @author qjj
  * @since 2021-12-22
  */
 public interface IVoucherOrderService extends IService<VoucherOrder> {

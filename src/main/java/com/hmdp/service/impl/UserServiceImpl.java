@@ -7,11 +7,15 @@ import com.baomidou.mybatisplus.core.conditions.query.Query;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hmdp.Exception.BadRequestException;
+import com.hmdp.Exception.CastException;
+import com.hmdp.constant.ShopCode;
 import com.hmdp.dto.LoginFormDTO;
 import com.hmdp.dto.Result;
 import com.hmdp.dto.UserDTO;
+import com.hmdp.entity.TradeUserMoneyLog;
 import com.hmdp.entity.User;
 import com.hmdp.mapper.UserMapper;
+import com.hmdp.service.ITradeUserMoneyLogService;
 import com.hmdp.service.IUserService;
 import com.hmdp.utils.RedisConstants;
 import com.hmdp.utils.RegexUtils;
@@ -25,12 +29,10 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static com.hmdp.utils.RedisConstants.*;
@@ -41,9 +43,10 @@ import static com.hmdp.utils.SystemConstants.USER_NICK_NAME_PREFIX;
  * 服务实现类
  * </p>
  *
- * @author 虎哥
- * @since 2021-12-22
- */
+ * @author:{QJJ}
+ * @date:{2022}
+ * @description:
+ **/
 @Slf4j
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
@@ -51,6 +54,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    @Resource
+    private ITradeUserMoneyLogService tradeUserMoneyLogService;
     @Override
     public Result sendCode(String phone, HttpSession session) {
         //1. 校验手机号
@@ -201,5 +206,56 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return user;
     }
 
+    /**
+     *  更新支付日志
+     * @param userMoneyLog
+     * @return
+     */
+    @Override
+    public Result updateMoneyPaid(TradeUserMoneyLog userMoneyLog) {
+        //1.校验参数是否合法
+        if(userMoneyLog==null ||
+                userMoneyLog.getUserId()==null ||
+                userMoneyLog.getOrderId()==null ||
+                userMoneyLog.getUseMoney()==null||
+                userMoneyLog.getUseMoney().compareTo(BigDecimal.ZERO)<=0){
+            CastException.cast(ShopCode.SHOP_REQUEST_PARAMETER_VALID);
+        }
 
+        //2.查询订单余额使用日志
+        QueryWrapper<TradeUserMoneyLog> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_id",userMoneyLog.getUserId());
+        wrapper.eq("order_id", userMoneyLog.getOrderId());
+        int r = tradeUserMoneyLogService.count(wrapper);
+        User tradeUser = baseMapper.selectById(userMoneyLog.getUserId());
+        //3.扣减余额...
+        if(userMoneyLog.getMoneyLogType().intValue()==ShopCode.SHOP_USER_MONEY_PAID.getCode().intValue()){
+            if(r>0){
+                //已经付款
+                CastException.cast(ShopCode.SHOP_ORDER_PAY_STATUS_IS_PAY);
+            }
+            //减余额
+            tradeUser.setUserMoney(new BigDecimal(tradeUser.getUserMoney()).subtract(userMoneyLog.getUseMoney()).longValue());
+            baseMapper.updateById(tradeUser);
+        }
+        //4.回退余额...
+        if(userMoneyLog.getMoneyLogType().intValue()==ShopCode.SHOP_USER_MONEY_REFUND.getCode().intValue()){
+            if(r<0){
+                //如果没有支付,则不能回退余额
+                CastException.cast(ShopCode.SHOP_ORDER_PAY_STATUS_NO_PAY);
+            }
+            //防止多次退款
+            int r2 = tradeUserMoneyLogService.count(wrapper);
+            if(r2>0){
+                CastException.cast(ShopCode.SHOP_USER_MONEY_REFUND_ALREADY);
+            }
+            //退款
+            tradeUser.setUserMoney(new BigDecimal(tradeUser.getUserMoney()).add(userMoneyLog.getUseMoney()).longValue());
+            baseMapper.updateById(tradeUser);
+        }
+        //5.记录订单余额使用日志
+        userMoneyLog.setCreateTime(new Date());
+        tradeUserMoneyLogService.save(userMoneyLog);
+        return Result.ok(ShopCode.SHOP_SUCCESS.getMessage());
+    }
 }
