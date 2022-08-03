@@ -1,5 +1,6 @@
 package com.hmdp.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.hmdp.dto.Result;
 import com.hmdp.entity.TradeOrder;
 
@@ -8,7 +9,7 @@ import com.hmdp.entity.TradeOrder;
  * @date:{2022}
  * @description:
  **/
-public interface IOrderService {
+public interface IOrderService extends IService<TradeOrder> {
 
     /**
      * 下单接口

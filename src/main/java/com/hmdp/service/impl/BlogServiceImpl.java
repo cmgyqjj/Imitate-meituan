@@ -49,8 +49,6 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
     @Resource
     private IFollowService followService;
 
-    @Resource
-    private Cache<Long, Blog> blogCache;
 
     @Override
     public Result queryHotBlog(Integer current) {
@@ -78,7 +76,8 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
     @Override
     public Result queryBlogById(Long id) {
 //        查询blog
-        Blog blog = blogCache.get(id, key -> getById(id));
+        Blog blog = getById(id);
+
         if(blog==null){
             return Result.fail("笔记不存在");
         }
@@ -116,7 +115,6 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
             if(isSuccess){
                 stringRedisTemplate.opsForZSet().add(key,userId.toString(),System.currentTimeMillis());
             }
-
         }else{
 //        如果已点赞，取消点赞
 //        数据库点赞数-1

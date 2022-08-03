@@ -29,8 +29,25 @@ spring:
 #      spec: maximumSize= 500
   jackson:
     default-property-inclusion: non_null # JSON处理时忽略非空字段
+
 mybatis-plus:
   type-aliases-package: com.hmdp.entity # 别名扫描包
+
 logging:
   level:
     com.hmdp: debug
+
+
+rocketmq:
+  name-server: 192.168.56.100:9876
+  producer:
+    group: orderProducerGroup
+
+mq:
+  order:
+    consumer:
+      group:
+        name: order_orderTopic_cancel_group
+    topic: orderTopic
+    tag:
+      cancel: order_cancel
