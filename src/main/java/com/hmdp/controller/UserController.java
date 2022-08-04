@@ -86,17 +86,6 @@ public class UserController {
     }
 
 
-    @GetMapping("/{id}")
-    public Result queryUserById(@PathVariable("id") Long userId){
-        User user = userService.getById(userId);
-        if(user==null){
-            return Result.ok();
-        }
-        UserDTO userDTO= BeanUtil.copyProperties(user,UserDTO.class);
-        return Result.ok(userDTO);
-    }
-
-
     @PostMapping("/sign")
     public Result sign(){
         return userService.sign();

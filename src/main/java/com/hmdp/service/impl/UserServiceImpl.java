@@ -14,8 +14,10 @@ import com.hmdp.dto.Result;
 import com.hmdp.dto.UserDTO;
 import com.hmdp.entity.TradeUserMoneyLog;
 import com.hmdp.entity.User;
+import com.hmdp.entity.UserInfo;
 import com.hmdp.mapper.UserMapper;
 import com.hmdp.service.ITradeUserMoneyLogService;
+import com.hmdp.service.IUserInfoService;
 import com.hmdp.service.IUserService;
 import com.hmdp.utils.RedisConstants;
 import com.hmdp.utils.RegexUtils;
@@ -53,7 +55,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
-
+    @Resource
+    private IUserInfoService userInfoService;
     @Resource
     private ITradeUserMoneyLogService tradeUserMoneyLogService;
     @Override
@@ -173,6 +176,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             //6. 不存在，创建新用户
             user = createUserWithPhone(phone);
         }
+        UserInfo userInfo = userInfoService.query().eq("user_id", user.getId()).one();
 
         //7.保存用户信息到redis
 //        session.setAttribute("user",BeanUtil.copyProperties(user,UserDTO.class));
@@ -180,6 +184,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         String token= UUID.randomUUID().toString();
 //        将User对象转为Hash存储
         UserDTO userDTO=BeanUtil.copyProperties(user,UserDTO.class);
+        BeanUtil.copyProperties(userInfo,userDTO);
         Map<String, Object> userDTOMap = BeanUtil.beanToMap(userDTO,new HashMap<>(),
                 CopyOptions.create().setIgnoreNullValue(true)
                         .setFieldValueEditor((fieldName,fieldValue)->

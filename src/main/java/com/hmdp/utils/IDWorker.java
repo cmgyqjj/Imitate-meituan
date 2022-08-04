@@ -1,5 +1,8 @@
 package com.hmdp.utils;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class IDWorker {
 
     /**
@@ -33,16 +36,16 @@ public class IDWorker {
     private long sequence = 0L; //序列号
     private long lastStmp = -1L;//上一次时间戳
 
-    public IDWorker(long datacenterId, long machineId) {
-        if (datacenterId > MAX_DATACENTER_NUM || datacenterId < 0) {
-            throw new IllegalArgumentException("datacenterId can't be greater than MAX_DATACENTER_NUM or less than 0");
-        }
-        if (machineId > MAX_MACHINE_NUM || machineId < 0) {
-            throw new IllegalArgumentException("machineId can't be greater than MAX_MACHINE_NUM or less than 0");
-        }
-        this.datacenterId = datacenterId;
-        this.machineId = machineId;
-    }
+//    public IDWorker(long datacenterId, long machineId) {
+//        if (datacenterId > MAX_DATACENTER_NUM || datacenterId < 0) {
+//            throw new IllegalArgumentException("datacenterId can't be greater than MAX_DATACENTER_NUM or less than 0");
+//        }
+//        if (machineId > MAX_MACHINE_NUM || machineId < 0) {
+//            throw new IllegalArgumentException("machineId can't be greater than MAX_MACHINE_NUM or less than 0");
+//        }
+//        this.datacenterId = datacenterId;
+//        this.machineId = machineId;
+//    }
 
     /**
      * 产生下一个ID
@@ -87,11 +90,6 @@ public class IDWorker {
         return System.currentTimeMillis();
     }
 
-    public static void main(String[] args) {
-        IDWorker idWorker = new IDWorker(2, 3);
-        for (int i = 0; i < 10; i++) {
-            System.out.println(idWorker.nextId());
-        }
-    }
+
 
 }

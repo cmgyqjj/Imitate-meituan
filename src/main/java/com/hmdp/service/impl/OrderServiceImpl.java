@@ -14,6 +14,7 @@ import com.hmdp.service.IGoodsService;
 import com.hmdp.service.IOrderService;
 import com.hmdp.service.IUserService;
 import com.hmdp.utils.IDWorker;
+import com.hmdp.utils.RedisIdWorker;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
@@ -170,10 +171,11 @@ public class OrderServiceImpl extends ServiceImpl<TradeOrderMapper, TradeOrder> 
         goodsNumberLog.setOrderId(order.getOrderId());
         goodsNumberLog.setGoodsId(order.getGoodsId());
         goodsNumberLog.setGoodsNumber(order.getGoodsNumber());
-        Result result = goodsService.reduceGoodsNum(goodsNumberLog);
-        if(result.getSuccess().equals(ShopCode.SHOP_FAIL.getSuccess())){
-            CastException.cast(ShopCode.SHOP_REDUCE_GOODS_NUM_FAIL);
-        }
+//        goodsService.update().setSql("liked = liked -1").eq("id", id).update();
+//        Result result = goodsService.(goodsNumberLog);
+//        if(result.getSuccess().equals(ShopCode.SHOP_FAIL.getSuccess())){
+//            CastException.cast(ShopCode.SHOP_REDUCE_GOODS_NUM_FAIL);
+//        }
         log.info("订单:"+order.getOrderId()+"扣减库存成功");
     }
 

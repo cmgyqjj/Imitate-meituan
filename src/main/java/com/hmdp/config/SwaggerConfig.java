@@ -1,10 +1,13 @@
 package com.hmdp.config;
 
 import com.google.common.base.Predicates;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
@@ -18,27 +21,27 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  **/
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
+public class SwaggerConfig implements WebMvcConfigurer {
 
     @Bean
-    public Docket webApiConfig(){
+    public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("webApi")
-                .apiInfo(webApiInfo())
+                .apiInfo(apiInfo())
                 .select()
-                .paths(Predicates.not(PathSelectors.regex("/admin/.*")))
-                .paths(Predicates.not(PathSelectors.regex("/error.*")))
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                .paths(PathSelectors.any())
                 .build();
+    }
 
-    }
-    private ApiInfo webApiInfo(){
+    private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("API文档")
-                .description("接口定义")
-                .version("1.0")
-                .contact(new Contact("qjj", "http://www.baidu.com",
-                        "524733312@qq.com"))
-                .termsOfServiceUrl("http://localhost:8083/swagger-ui.html")
+                .title("Api文档")
+                .description("Api文档")
+                .contact(new Contact("qjj", "仿美团", "524733312@qq.com"))
+                .termsOfServiceUrl("")
+                .version("1.0.0")
                 .build();
     }
+
+
 }
