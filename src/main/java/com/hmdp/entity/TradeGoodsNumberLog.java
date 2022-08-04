@@ -1,56 +1,42 @@
 package com.hmdp.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
-import java.util.Date;
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author qjj
+ * @since 2022-08-04
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("trade_goods_number_log")
-public class TradeGoodsNumberLog  implements Serializable {
+@ApiModel(value="TradeGoodsNumberLog对象", description="")
+public class TradeGoodsNumberLog implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "商品ID")
+    @TableId(value = "goods_id", type = IdType.AUTO)
+    private Long goodsId;
+
+    @ApiModelProperty(value = "订单ID")
+    private Long orderId;
+
+    @ApiModelProperty(value = "库存数量")
     private Integer goodsNumber;
 
     private Date logTime;
-    private Long goodsId;
 
-    private Long orderId;
 
-    public Long getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public Integer getGoodsNumber() {
-        return goodsNumber;
-    }
-
-    public void setGoodsNumber(Integer goodsNumber) {
-        this.goodsNumber = goodsNumber;
-    }
-
-    public Date getLogTime() {
-        return logTime;
-    }
-
-    public void setLogTime(Date logTime) {
-        this.logTime = logTime;
-    }
 }

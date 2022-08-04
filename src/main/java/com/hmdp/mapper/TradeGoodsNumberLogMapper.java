@@ -1,14 +1,16 @@
 package com.hmdp.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.hmdp.entity.TradeCoupon;
 import com.hmdp.entity.TradeGoodsNumberLog;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * @author:{QJJ}
- * @date:{2022}
- * @description:
- **/
+ * <p>
+ *  Mapper 接口
+ * </p>
+ *
+ * @author qjj
+ * @since 2022-08-04
+ */
 public interface TradeGoodsNumberLogMapper extends BaseMapper<TradeGoodsNumberLog> {
 
 }

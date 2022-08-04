@@ -1,79 +1,50 @@
 package com.hmdp.entity;
 
+import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.IdType;
+import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
-
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author qjj
+ * @since 2022-08-04
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("trade_coupon")
-public class TradeCoupon implements Serializable{
+@ApiModel(value="TradeCoupon对象", description="")
+public class TradeCoupon implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "优惠券ID")
     @TableId(value = "coupon_id", type = IdType.AUTO)
     private Long couponId;
 
+    @ApiModelProperty(value = "优惠券金额")
     private BigDecimal couponPrice;
 
+    @ApiModelProperty(value = "用户ID")
     private Long userId;
 
+    @ApiModelProperty(value = "订单ID")
     private Long orderId;
 
+    @ApiModelProperty(value = "是否使用 0未使用 1已使用")
     private Integer isUsed;
 
+    @ApiModelProperty(value = "使用时间")
     private Date usedTime;
 
-    public Long getCouponId() {
-        return couponId;
-    }
 
-    public void setCouponId(Long couponId) {
-        this.couponId = couponId;
-    }
-
-    public BigDecimal getCouponPrice() {
-        return couponPrice;
-    }
-
-    public void setCouponPrice(BigDecimal couponPrice) {
-        this.couponPrice = couponPrice;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public Integer getIsUsed() {
-        return isUsed;
-    }
-
-    public void setIsUsed(Integer isUsed) {
-        this.isUsed = isUsed;
-    }
-
-    public Date getUsedTime() {
-        return usedTime;
-    }
-
-    public void setUsedTime(Date usedTime) {
-        this.usedTime = usedTime;
-    }
 }

@@ -1,107 +1,50 @@
 package com.hmdp.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Timestamp;
-
 /**
- * @author:{QJJ}
- * @date:{2022}
- * @description:
- **/
+ * <p>
+ * 
+ * </p>
+ *
+ * @author qjj
+ * @since 2022-08-04
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("trade_mq_consumer_log")
+@ApiModel(value="TradeMqConsumerLog对象", description="")
 public class TradeMqConsumerLog implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private String msgId;
+
+    @TableId(value = "group_name", type = IdType.AUTO)
     private String groupName;
+
     private String msgTag;
+
     private String msgKey;
+
     private String msgBody;
+
+    @ApiModelProperty(value = "0:正在处理;1:处理成功;2:处理失败")
     private Integer consumerStatus;
+
     private Integer consumerTimes;
+
     private Date consumerTimestamp;
+
     private String remark;
 
-    public String getMsgId() {
-        return msgId;
-    }
 
-    public void setMsgId(String msgId) {
-        this.msgId = msgId;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
-
-    public String getMsgTag() {
-        return msgTag;
-    }
-
-    public void setMsgTag(String msgTag) {
-        this.msgTag = msgTag;
-    }
-
-    public String getMsgKey() {
-        return msgKey;
-    }
-
-    public void setMsgKey(String msgKey) {
-        this.msgKey = msgKey;
-    }
-
-    public String getMsgBody() {
-        return msgBody;
-    }
-
-    public void setMsgBody(String msgBody) {
-        this.msgBody = msgBody;
-    }
-
-    public Integer getConsumerStatus() {
-        return consumerStatus;
-    }
-
-    public void setConsumerStatus(Integer consumerStatus) {
-        this.consumerStatus = consumerStatus;
-    }
-
-    public Integer getConsumerTimes() {
-        return consumerTimes;
-    }
-
-    public void setConsumerTimes(Integer consumerTimes) {
-        this.consumerTimes = consumerTimes;
-    }
-
-    public Date getConsumerTimestamp() {
-        return consumerTimestamp;
-    }
-
-    public void setConsumerTimestamp(Date consumerTimestamp) {
-        this.consumerTimestamp = consumerTimestamp;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
 }
-
-
-

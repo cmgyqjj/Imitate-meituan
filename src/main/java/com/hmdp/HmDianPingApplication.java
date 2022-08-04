@@ -14,11 +14,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableAspectJAutoProxy(exposeProxy = true)
 public class HmDianPingApplication {
 
-//    @Bean
-//    public IDWorker getBean(){
-//        return new IDWorker(1,1);
-//    }
-
     public static void main(String[] args) {
         SpringApplication.run(HmDianPingApplication.class, args);
     }

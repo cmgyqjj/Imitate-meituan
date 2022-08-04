@@ -1,221 +1,92 @@
 package com.hmdp.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import java.math.BigDecimal;
+import com.baomidou.mybatisplus.annotation.IdType;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
-
 /**
- * @author:{QJJ}
- * @date:{2022}
- * @description:订单类
- **/
+ * <p>
+ * 
+ * </p>
+ *
+ * @author qjj
+ * @since 2022-08-04
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("trade_order")
+@ApiModel(value="TradeOrder对象", description="")
 public class TradeOrder implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "订单ID")
+    @TableId(value = "order_id", type = IdType.AUTO)
     private Long orderId;
 
+    @ApiModelProperty(value = "用户ID")
     private Long userId;
 
+    @ApiModelProperty(value = "订单状态 0未确认 1已确认 2已取消 3无效 4退款")
     private Integer orderStatus;
 
+    @ApiModelProperty(value = "支付状态 0未支付 1支付中 2已支付")
     private Integer payStatus;
 
+    @ApiModelProperty(value = "发货状态 0未发货 1已发货 2已收货")
     private Integer shippingStatus;
 
+    @ApiModelProperty(value = "收货地址")
     private String address;
 
+    @ApiModelProperty(value = "收货人")
     private String consignee;
 
+    @ApiModelProperty(value = "商品ID")
     private Long goodsId;
 
+    @ApiModelProperty(value = "商品数量")
     private Integer goodsNumber;
 
+    @ApiModelProperty(value = "商品价格")
     private BigDecimal goodsPrice;
 
-    private Long goodsAmount;
+    @ApiModelProperty(value = "商品总价")
+    private BigDecimal goodsAmount;
 
+    @ApiModelProperty(value = "运费")
     private BigDecimal shippingFee;
 
+    @ApiModelProperty(value = "订单价格")
     private BigDecimal orderAmount;
 
+    @ApiModelProperty(value = "优惠券ID")
     private Long couponId;
 
+    @ApiModelProperty(value = "优惠券")
     private BigDecimal couponPaid;
 
+    @ApiModelProperty(value = "已付金额")
     private BigDecimal moneyPaid;
 
+    @ApiModelProperty(value = "支付金额")
     private BigDecimal payAmount;
 
+    @ApiModelProperty(value = "创建时间")
     private Date addTime;
 
+    @ApiModelProperty(value = "订单确认时间")
     private Date confirmTime;
 
+    @ApiModelProperty(value = "支付时间")
     private Date payTime;
 
-    public Long getOrderId() {
-        return orderId;
-    }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Integer getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(Integer orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public Integer getPayStatus() {
-        return payStatus;
-    }
-
-    public void setPayStatus(Integer payStatus) {
-        this.payStatus = payStatus;
-    }
-
-    public Integer getShippingStatus() {
-        return shippingStatus;
-    }
-
-    public void setShippingStatus(Integer shippingStatus) {
-        this.shippingStatus = shippingStatus;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
-    }
-
-    public String getConsignee() {
-        return consignee;
-    }
-
-    public void setConsignee(String consignee) {
-        this.consignee = consignee == null ? null : consignee.trim();
-    }
-
-    public Long getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
-    }
-
-    public Integer getGoodsNumber() {
-        return goodsNumber;
-    }
-
-    public void setGoodsNumber(Integer goodsNumber) {
-        this.goodsNumber = goodsNumber;
-    }
-
-    public BigDecimal getGoodsPrice() {
-        return goodsPrice;
-    }
-
-    public void setGoodsPrice(BigDecimal goodsPrice) {
-        this.goodsPrice = goodsPrice;
-    }
-
-    public Long getGoodsAmount() {
-        return goodsAmount;
-    }
-
-    public void setGoodsAmount(Long goodsAmount) {
-        this.goodsAmount = goodsAmount;
-    }
-
-    public BigDecimal getShippingFee() {
-        return shippingFee;
-    }
-
-    public void setShippingFee(BigDecimal shippingFee) {
-        this.shippingFee = shippingFee;
-    }
-
-    public BigDecimal getOrderAmount() {
-        return orderAmount;
-    }
-
-    public void setOrderAmount(BigDecimal orderAmount) {
-        this.orderAmount = orderAmount;
-    }
-
-    public Long getCouponId() {
-        return couponId;
-    }
-
-    public void setCouponId(Long couponId) {
-        this.couponId = couponId;
-    }
-
-    public BigDecimal getCouponPaid() {
-        return couponPaid;
-    }
-
-    public void setCouponPaid(BigDecimal couponPaid) {
-        this.couponPaid = couponPaid;
-    }
-
-    public BigDecimal getMoneyPaid() {
-        return moneyPaid;
-    }
-
-    public void setMoneyPaid(BigDecimal moneyPaid) {
-        this.moneyPaid = moneyPaid;
-    }
-
-    public BigDecimal getPayAmount() {
-        return payAmount;
-    }
-
-    public void setPayAmount(BigDecimal payAmount) {
-        this.payAmount = payAmount;
-    }
-
-    public Date getAddTime() {
-        return addTime;
-    }
-
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
-    }
-
-    public Date getConfirmTime() {
-        return confirmTime;
-    }
-
-    public void setConfirmTime(Date confirmTime) {
-        this.confirmTime = confirmTime;
-    }
-
-    public Date getPayTime() {
-        return payTime;
-    }
-
-    public void setPayTime(Date payTime) {
-        this.payTime = payTime;
-    }
 }

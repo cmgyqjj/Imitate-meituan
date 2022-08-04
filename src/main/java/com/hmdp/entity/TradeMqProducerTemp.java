@@ -1,94 +1,48 @@
 package com.hmdp.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
-import java.util.Date;
-
 /**
- * @author:{QJJ}
- * @date:{2022}
- * @description:
- **/
-
+ * <p>
+ * 
+ * </p>
+ *
+ * @author qjj
+ * @since 2022-08-04
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("trade_mq_producer_temp")
+@ApiModel(value="TradeMqProducerTemp对象", description="")
 public class TradeMqProducerTemp implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @TableId(value = "id", type = IdType.AUTO)
     private String id;
+
     private String groupName;
+
     private String msgTopic;
+
     private String msgTag;
+
     private String msgKey;
+
     private String msgBody;
-    private String msgStatus;
+
+    @ApiModelProperty(value = "0:未处理;1:已经处理")
+    private Integer msgStatus;
+
     private Date createTime;
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
-
-    public String getMsgTopic() {
-        return msgTopic;
-    }
-
-    public void setMsgTopic(String msgTopic) {
-        this.msgTopic = msgTopic;
-    }
-
-    public String getMsgTag() {
-        return msgTag;
-    }
-
-    public void setMsgTag(String msgTag) {
-        this.msgTag = msgTag;
-    }
-
-    public String getMsgKey() {
-        return msgKey;
-    }
-
-    public void setMsgKey(String msgKey) {
-        this.msgKey = msgKey;
-    }
-
-    public String getMsgBody() {
-        return msgBody;
-    }
-
-    public void setMsgBody(String msgBody) {
-        this.msgBody = msgBody;
-    }
-
-    public String getMsgStatus() {
-        return msgStatus;
-    }
-
-    public void setMsgStatus(String msgStatus) {
-        this.msgStatus = msgStatus;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
 }

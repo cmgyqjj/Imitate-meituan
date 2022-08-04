@@ -2,7 +2,7 @@ package com.hmdp;
 
 
 import com.hmdp.entity.TradeOrder;
-import com.hmdp.service.IOrderService;
+import com.hmdp.service.TradeOrderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 public class OrderServiceTest {
 
     @Autowired
-    private IOrderService orderService;
+    private TradeOrderService orderService;
 
     @Test
     public void confirmOrder() throws IOException {
@@ -36,7 +36,7 @@ public class OrderServiceTest {
         order.setShippingFee(BigDecimal.ZERO);
         order.setOrderAmount(new BigDecimal(1000));
         order.setMoneyPaid(new BigDecimal(100));
-        orderService.confirmOrder(order);
+//        orderService.confirmOrder(order);
 
         System.in.read();
 

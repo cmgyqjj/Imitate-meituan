@@ -1,21 +1,20 @@
 package com.hmdp.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hmdp.entity.TradeGoodsNumberLog;
 import com.hmdp.entity.TradeMqProducerTemp;
-import com.hmdp.mapper.TradeGoodsNumberLogMapper;
 import com.hmdp.mapper.TradeMqProducerTempMapper;
-import com.hmdp.service.ITradeGoodsNumberLogService;
-import com.hmdp.service.ITradeMqProducerTempService;
+import com.hmdp.service.TradeMqProducerTempService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
- * @author:{QJJ}
- * @date:{2022}
- * @description:
- **/
+ * <p>
+ *  服务实现类
+ * </p>
+ *
+ * @author qjj
+ * @since 2022-08-04
+ */
 @Service
-public class TradeMqProducerTempServiceImpl extends ServiceImpl<TradeMqProducerTempMapper, TradeMqProducerTemp> implements ITradeMqProducerTempService {
-
+public class TradeMqProducerTempServiceImpl extends ServiceImpl<TradeMqProducerTempMapper, TradeMqProducerTemp> implements TradeMqProducerTempService {
 
 }

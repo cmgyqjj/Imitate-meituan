@@ -1,13 +1,16 @@
 package com.hmdp.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.hmdp.entity.TradeMqConsumerLog;
 import com.hmdp.entity.TradeMqProducerTemp;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * @author:{QJJ}
- * @date:{2022}
- * @description:
- **/
+ * <p>
+ *  Mapper 接口
+ * </p>
+ *
+ * @author qjj
+ * @since 2022-08-04
+ */
 public interface TradeMqProducerTempMapper extends BaseMapper<TradeMqProducerTemp> {
+
 }

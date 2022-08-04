@@ -1,15 +1,16 @@
 package com.hmdp.mapper;
 
-
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.hmdp.entity.TradeGoodsNumberLog;
 import com.hmdp.entity.TradeMqConsumerLog;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-import java.util.List;
-
-@Mapper
+/**
+ * <p>
+ *  Mapper 接口
+ * </p>
+ *
+ * @author qjj
+ * @since 2022-08-04
+ */
 public interface TradeMqConsumerLogMapper extends BaseMapper<TradeMqConsumerLog> {
 
 }
