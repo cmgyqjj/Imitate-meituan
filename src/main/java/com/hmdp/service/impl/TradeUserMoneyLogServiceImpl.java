@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
  * @description:
  **/
 @Service
-public class TradeUserMoneyLogService extends ServiceImpl<TradeUserMoneyLogMapper, TradeUserMoneyLog> implements ITradeUserMoneyLogService {
-
+public class TradeUserMoneyLogServiceImpl extends ServiceImpl<TradeUserMoneyLogMapper, TradeUserMoneyLog> implements ITradeUserMoneyLogService {
 
 }

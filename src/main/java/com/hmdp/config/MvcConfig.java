@@ -2,9 +2,15 @@ package com.hmdp.config;
 
 import com.hmdp.utils.LoginInterceptor;
 import com.hmdp.utils.RefreshTokenInterceptor;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -32,7 +38,8 @@ public class MvcConfig implements WebMvcConfigurer {
                         "/user/code",
                         "/user/login",
                         "swagger-ui.html",
-                        "doc.html"
+                        "doc.html",
+                        "/swagger-ui/**"
                 ).order(1);
 //        token刷新redis持续时间的拦截器
         registry.addInterceptor(new RefreshTokenInterceptor(stringRedisTemplate))
@@ -48,5 +55,20 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+
+    // 当前跨域请求最大有效时长。这里默认1天
+    private static final long MAX_AGE = 24 * 60 * 60;
+
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOrigin("*"); // 1 设置访问源地址
+        corsConfiguration.addAllowedHeader("*"); // 2 设置访问源请求头
+        corsConfiguration.addAllowedMethod("*"); // 3 设置访问源请求方法
+        corsConfiguration.setMaxAge(MAX_AGE);
+        source.registerCorsConfiguration("/**", corsConfiguration); // 4 对接口配置跨域设置
+        return new CorsFilter(source);
     }
 }

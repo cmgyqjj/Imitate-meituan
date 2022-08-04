@@ -51,3 +51,8 @@ mq:
     topic: orderTopic
     tag:
       cancel: order_cancel
+
+swagger:
+  enable: true
+  server:
+    port: 8083

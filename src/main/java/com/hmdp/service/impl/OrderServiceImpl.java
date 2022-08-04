@@ -50,7 +50,7 @@ public class OrderServiceImpl extends ServiceImpl<TradeOrderMapper, TradeOrder> 
 
     @Value("${mq.order.tag.cancel}")
     private String tag;
-    @Resource
+    @Autowired
     private IDWorker idWorker;
     @Resource
     private ICouponService couponService;
