@@ -6,7 +6,7 @@ import com.hmdp.entity.TradeMqProducerTemp;
 import com.hmdp.mapper.TradeGoodsNumberLogMapper;
 import com.hmdp.mapper.TradeMqProducerTempMapper;
 import com.hmdp.service.ITradeGoodsNumberLogService;
-import com.hmdp.service.ITradeMqProducerTemp;
+import com.hmdp.service.ITradeMqProducerTempService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @description:
  **/
 @Service
-public class TradeMqProducerTempServiceImpl extends ServiceImpl<TradeMqProducerTempMapper, TradeMqProducerTemp> implements ITradeMqProducerTemp {
+public class TradeMqProducerTempServiceImpl extends ServiceImpl<TradeMqProducerTempMapper, TradeMqProducerTemp> implements ITradeMqProducerTempService {
 
 
 }

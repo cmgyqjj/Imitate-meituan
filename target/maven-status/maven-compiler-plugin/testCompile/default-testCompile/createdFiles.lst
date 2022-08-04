@@ -2,6 +2,7 @@ com\hmdp\HeapOOM.class
 com\hmdp\HeapOOM$OOMObject.class
 com\hmdp\CaffeineTest$2.class
 com\hmdp\CaffeineTest.class
+com\hmdp\OrderServiceTest.class
 com\hmdp\JavaVMStackOOM.class
 com\hmdp\CaffeineTest$1.class
 com\hmdp\HmDianPingApplicationTests.class

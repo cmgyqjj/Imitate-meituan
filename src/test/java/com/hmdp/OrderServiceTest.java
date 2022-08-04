@@ -3,7 +3,7 @@ package com.hmdp;
 
 import com.hmdp.entity.TradeOrder;
 import com.hmdp.service.IOrderService;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +24,7 @@ public class OrderServiceTest {
 
         Long coupouId = 345988230098857984L;
         Long goodsId = 345959443973935104L;
-        Long userId = 345963634385633280L;
+        Long userId = 1L;
 
         TradeOrder order = new TradeOrder();
         order.setGoodsId(goodsId);

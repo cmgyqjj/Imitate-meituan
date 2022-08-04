@@ -1,5 +1,7 @@
 package com.hmdp.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,6 +16,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @TableName("trade_coupon")
 public class TradeCoupon implements Serializable{
+    @TableId(value = "coupon_id", type = IdType.AUTO)
     private Long couponId;
 
     private BigDecimal couponPrice;

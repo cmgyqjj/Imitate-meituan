@@ -1,5 +1,7 @@
 package com.hmdp.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,6 +21,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @TableName("trade_goods")
 public class TradeGoods implements Serializable {
+    @TableId(value = "goods_id", type = IdType.AUTO)
     private Long goodsId;
 
     private String goodsName;
