@@ -52,7 +52,6 @@ com\hmdp\controller\TbBlogController.class
 com\hmdp\config\MvcConfig.class
 com\hmdp\entity\TradeGoodsNumberLog.class
 com\hmdp\mapper\TbBlogMapper.class
-com\hmdp\config\Swagger2Config.class
 com\hmdp\controller\TbVoucherController.class
 com\hmdp\service\TradeCouponService.class
 com\hmdp\utils\RegexPatterns.class
@@ -88,6 +87,7 @@ com\hmdp\service\TradeMqConsumerLogService.class
 com\hmdp\entity\TbBlog.class
 com\hmdp\controller\TradeGoodsController.class
 com\hmdp\controller\TbUserInfoController.class
+com\hmdp\config\SwaggerConfig.class
 com\hmdp\controller\UploadController.class
 com\hmdp\controller\TbSeckillVoucherController.class
 com\hmdp\controller\TbBlogCommentsController.class

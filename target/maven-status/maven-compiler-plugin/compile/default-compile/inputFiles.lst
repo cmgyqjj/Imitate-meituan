@@ -82,7 +82,6 @@ E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\enti
 E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\entity\TradeGoods.java
 E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\mapper\TradeOrderMapper.java
 E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\controller\TradeCouponController.java
-E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\config\Swagger2Config.java
 E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\entity\TradeMqConsumerLog.java
 E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\utils\RedisData.java
 E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\Exception\BadRequestException.java
@@ -90,6 +89,7 @@ E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\serv
 E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\service\TbFollowService.java
 E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\service\TbShopService.java
 E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\controller\TradeGoodsNumberLogController.java
+E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\config\SwaggerConfig.java
 E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\entity\TbUserInfo.java
 E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\service\impl\TbBlogCommentsServiceImpl.java
 E:\百度云下载资料\hm-dianping\Imitate-meituan\src\main\java\com\hmdp\controller\TradeMqConsumerLogController.java

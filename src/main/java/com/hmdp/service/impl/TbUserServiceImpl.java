@@ -18,6 +18,7 @@ import com.hmdp.service.TbUserInfoService;
 import com.hmdp.service.TbUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hmdp.service.TradeUserMoneyLogService;
+import com.hmdp.utils.IDWorker;
 import com.hmdp.utils.RedisConstants;
 import com.hmdp.utils.RegexUtils;
 import com.hmdp.utils.UserHolder;
@@ -49,8 +50,11 @@ import static com.hmdp.utils.SystemConstants.USER_NICK_NAME_PREFIX;
 @Slf4j
 @Service
 public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> implements TbUserService {
+
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+    @Resource
+    private IDWorker idWorker;
     @Resource
     private TbUserInfoService userInfoService;
     @Resource
@@ -201,9 +205,26 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
         TbUser user = new TbUser();
         user.setPhone(phone);
         user.setNickName(USER_NICK_NAME_PREFIX + RandomUtil.randomString(10));
-
+        user.setUserMoney(BigDecimal.valueOf(0));
+        user.setUserScore(0);
+        TbUserInfo userInfo = new TbUserInfo();
+        userInfo.setGender(false);
+        userInfo.setCreateTime(new Date());
+        userInfo.setBirthday(new Date());
+        userInfo.setCity("");
+        long userId = idWorker.nextId();
+        userInfo.setUserId(userId);
+        user.setId(userId);
+        userInfo.setCredits(0);
+        userInfo.setFans(0);
+        userInfo.setFollowee(0);
+        userInfo.setIntroduce("无个人介绍");
+        userInfo.setLevel(true);
+        userInfo.setUpdateTime(new Date());
+        userInfoService.save(userInfo);
         // 2.保存用户
-        save(user);
+        boolean save = save(user);
+        save=save;
         return user;
     }
 
@@ -227,7 +248,7 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
         QueryWrapper<TradeUserMoneyLog> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id",userMoneyLog.getUserId());
         wrapper.eq("order_id", userMoneyLog.getOrderId());
-        int r = tradeUserMoneyLogService.count(wrapper);
+        long r = tradeUserMoneyLogService.count(wrapper);
         TbUser tradeUser = baseMapper.selectById(userMoneyLog.getUserId());
         //3.扣减余额...
         if(userMoneyLog.getMoneyLogType().intValue()==ShopCode.SHOP_USER_MONEY_PAID.getCode().intValue()){
@@ -246,7 +267,7 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
                 CastException.cast(ShopCode.SHOP_ORDER_PAY_STATUS_NO_PAY);
             }
             //防止多次退款
-            int r2 = tradeUserMoneyLogService.count(wrapper);
+            long r2 = tradeUserMoneyLogService.count(wrapper);
             if(r2>0){
                 CastException.cast(ShopCode.SHOP_USER_MONEY_REFUND_ALREADY);
             }

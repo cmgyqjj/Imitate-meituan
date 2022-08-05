@@ -179,7 +179,7 @@ public class TbVoucherOrderServiceImpl extends ServiceImpl<TbVoucherOrderMapper,
 //    用户id
         Long userId = UserHolder.getUser().getId();
         //    一人一单
-        int count = query().eq("user_id", userId)
+        Integer count = query().eq("user_id", userId)
                 .eq("voucher_id", voucherOrder.getVoucherId())
                 .count();
         if (count > 0) {
