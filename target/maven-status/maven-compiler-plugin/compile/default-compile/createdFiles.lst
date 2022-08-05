@@ -51,6 +51,7 @@ com\hmdp\config\MybatisConfig.class
 com\hmdp\controller\TbBlogController.class
 com\hmdp\config\MvcConfig.class
 com\hmdp\entity\TradeGoodsNumberLog.class
+com\hmdp\aop\TestAnnotation.class
 com\hmdp\mapper\TbBlogMapper.class
 com\hmdp\controller\TbVoucherController.class
 com\hmdp\service\TradeCouponService.class
@@ -119,5 +120,6 @@ com\hmdp\dto\Result.class
 com\hmdp\entity\TbVoucherOrder.class
 com\hmdp\utils\RefreshTokenInterceptor.class
 com\hmdp\mapper\TradeCouponMapper.class
+com\hmdp\config\AopConfig.class
 com\hmdp\controller\TradeMqProducerTempController.class
 com\hmdp\controller\TradeCouponController.class

@@ -2,6 +2,7 @@ package com.hmdp.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hmdp.aop.TestAnnotation;
 import com.hmdp.dto.Result;
 import com.hmdp.dto.UserDTO;
 import com.hmdp.entity.TbBlog;
@@ -30,6 +31,7 @@ public class TbBlogController {
 
 
     @PostMapping
+    @TestAnnotation
     public Result saveBlog(@RequestBody TbBlog blog) {
         return blogService.saveBlog(blog);
     }
