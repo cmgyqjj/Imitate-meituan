@@ -2,6 +2,7 @@ package com.hmdp.controller;
 
 
 import cn.hutool.core.bean.BeanUtil;
+import com.hmdp.aop.RemoveHttpPost;
 import com.hmdp.dto.LoginFormDTO;
 import com.hmdp.dto.Result;
 import com.hmdp.dto.UserDTO;
@@ -46,6 +47,7 @@ public class TbUserController {
      * @param loginForm 登录参数，包含手机号、验证码；或者手机号、密码
      */
     @PostMapping("/login")
+    @RemoveHttpPost
     public Result login(@RequestBody LoginFormDTO loginForm, HttpSession session){
         // 实现登录功能
         return userService.login(loginForm, session);

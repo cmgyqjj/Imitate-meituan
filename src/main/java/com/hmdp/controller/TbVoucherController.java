@@ -1,6 +1,7 @@
 package com.hmdp.controller;
 
 
+import com.hmdp.aop.RemoveHttpPost;
 import com.hmdp.dto.Result;
 import com.hmdp.entity.TbVoucher;
 import com.hmdp.service.TbVoucherService;
@@ -28,6 +29,7 @@ public class TbVoucherController {
      * @return 优惠券id
      */
     @PostMapping
+    @RemoveHttpPost
     public Result addVoucher(@RequestBody TbVoucher voucher) {
         voucherService.save(voucher);
         return Result.ok(voucher.getId());
@@ -39,6 +41,7 @@ public class TbVoucherController {
      * @return 优惠券id
      */
     @PostMapping("seckill")
+    @RemoveHttpPost
     public Result addSeckillVoucher(@RequestBody TbVoucher voucher) {
         voucherService.addSeckillVoucher(voucher);
         return Result.ok(voucher.getId());

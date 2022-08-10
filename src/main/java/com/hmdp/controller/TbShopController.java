@@ -3,6 +3,7 @@ package com.hmdp.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hmdp.aop.RemoveHttpPost;
 import com.hmdp.dto.Result;
 import com.hmdp.entity.TbShop;
 import com.hmdp.service.TbShopService;
@@ -45,6 +46,7 @@ public class TbShopController {
      * @return 商铺id
      */
     @PostMapping
+    @RemoveHttpPost
     public Result saveShop(@RequestBody TbShop shop) {
         // 写入数据库
         shopService.save(shop);

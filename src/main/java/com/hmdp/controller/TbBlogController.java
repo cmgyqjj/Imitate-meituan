@@ -2,7 +2,7 @@ package com.hmdp.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hmdp.aop.TestAnnotation;
+import com.hmdp.aop.RemoveHttpPost;
 import com.hmdp.dto.Result;
 import com.hmdp.dto.UserDTO;
 import com.hmdp.entity.TbBlog;
@@ -31,12 +31,13 @@ public class TbBlogController {
 
 
     @PostMapping
-    @TestAnnotation
+    @RemoveHttpPost
     public Result saveBlog(@RequestBody TbBlog blog) {
         return blogService.saveBlog(blog);
     }
 
     @PutMapping("/like/{id}")
+    @RemoveHttpPost
     public Result likeBlog(@PathVariable("id") Long id) {
         return blogService.likeBlog(id);
     }

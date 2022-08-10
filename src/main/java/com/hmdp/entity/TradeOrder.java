@@ -28,7 +28,7 @@ public class TradeOrder implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "订单ID")
-    @TableId(value = "order_id", type = IdType.AUTO)
+    @TableId(value = "order_id", type = IdType.INPUT)
     private Long orderId;
 
     @ApiModelProperty(value = "用户ID")

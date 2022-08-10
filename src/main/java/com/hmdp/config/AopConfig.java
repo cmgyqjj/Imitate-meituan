@@ -44,7 +44,7 @@ public class AopConfig {
     /**
      * 指定切面的切入点
      */
-    @Pointcut("@annotation(com.hmdp.aop.TestAnnotation)")
+    @Pointcut("@annotation(com.hmdp.aop.RemoveHttpPost)")
     public void pointcutAnnotation() {
     }
     /**

@@ -2,6 +2,7 @@ com\hmdp\service\impl\TbShopServiceImpl.class
 com\hmdp\entity\TbShop.class
 com\hmdp\mapper\TradeGoodsNumberLogMapper.class
 com\hmdp\service\impl\TradeGoodsServiceImpl.class
+com\hmdp\aop\RemoveHttpPost.class
 com\hmdp\service\impl\TbSignServiceImpl.class
 com\hmdp\service\impl\TradeUserMoneyLogServiceImpl.class
 com\hmdp\service\TbUserInfoService.class
@@ -49,9 +50,7 @@ com\hmdp\Exception\CustomerException.class
 com\hmdp\mapper\TbBlogCommentsMapper.class
 com\hmdp\config\MybatisConfig.class
 com\hmdp\controller\TbBlogController.class
-com\hmdp\config\MvcConfig.class
 com\hmdp\entity\TradeGoodsNumberLog.class
-com\hmdp\aop\TestAnnotation.class
 com\hmdp\mapper\TbBlogMapper.class
 com\hmdp\controller\TbVoucherController.class
 com\hmdp\service\TradeCouponService.class

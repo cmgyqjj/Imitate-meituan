@@ -1,7 +1,5 @@
 package com.hmdp.config;
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
-import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,8 +9,6 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 
-import springfox.documentation.builders.RequestParameterBuilder;
-import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
@@ -29,43 +25,27 @@ import java.util.Set;
  * @author
  */
 @Configuration
-@EnableOpenApi
-@EnableSwaggerBootstrapUI
-@EnableKnife4j
+@EnableSwagger2 //开启Swagger2
 public class SwaggerConfig {
 
-//    @Value("${sny.security.jwt.header}")
-//    private String tokenHeader;
-
-
-    private Boolean enabled=true;
-
+    //配置 Swagger的Docket的Bean实例
     @Bean
-    public Docket createRestApi() {
-        Docket docket = new Docket(DocumentationType.OAS_30);
-        docket.enable(enabled).apiInfo(apiInfo())
-                // 分组名称
-                .groupName("all").select()
-                // 扫描包路径
-                .apis(RequestHandlerSelectors.basePackage("com.hmdp.controller"))
-                .paths(PathSelectors.any()).build();
-//                .globalRequestParameters(globalRequestParameters());
-//		docket.additionalModels(null, null)
-        return docket;
+    public Docket docket(){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo());
     }
-
-//    private List<RequestParameter> globalRequestParameters() {
-//        RequestParameterBuilder ticketPar = new RequestParameterBuilder();
-//        ticketPar.name(tokenHeader).description("token").in(ParameterType.HEADER).required(true).build();
-//        List<RequestParameter> pars = new ArrayList<RequestParameter>();
-//        pars.add(ticketPar.build());
-//        return pars;
-//    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("接口文档")
-                .description("所有业务接口文档")
-                .version("4.0").build();
+    //配置Swagger 信息apiInfo
+    private ApiInfo apiInfo(){
+        //作者信息
+        Contact DEFAULT_CONTACT = new Contact("qjj", "http://www.baidu.com/", "524733312@qq.com");
+        return new ApiInfo("qjj的SwaggerAPI文档",
+                "迎风起势！",
+                "1.0",
+                "http://www.baidu.com/",
+                DEFAULT_CONTACT,
+                "Apache 2.0",
+                "http://www.apache.org/licenses/LICENSE-2.0",
+                new ArrayList());
     }
-
 }
+

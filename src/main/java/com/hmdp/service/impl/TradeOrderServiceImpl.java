@@ -168,11 +168,11 @@ public class TradeOrderServiceImpl extends ServiceImpl<TradeOrderMapper, TradeOr
         goodsNumberLog.setOrderId(order.getOrderId());
         goodsNumberLog.setGoodsId(order.getGoodsId());
         goodsNumberLog.setGoodsNumber(order.getGoodsNumber());
-//        goodsService.update().setSql("liked = liked -1").eq("id", id).update();
-//        Result result = goodsService.(goodsNumberLog);
-//        if(result.getSuccess().equals(ShopCode.SHOP_FAIL.getSuccess())){
-//            CastException.cast(ShopCode.SHOP_REDUCE_GOODS_NUM_FAIL);
-//        }
+        boolean result = goodsService.update().setSql("goods_number = goods_number -1")
+                .eq("goods_id", order.getGoodsId()).update();
+        if(ShopCode.SHOP_FAIL.getSuccess().equals(result)){
+            CastException.cast(ShopCode.SHOP_REDUCE_GOODS_NUM_FAIL);
+        }
         log.info("订单:"+order.getOrderId()+"扣减库存成功");
     }
 
@@ -242,7 +242,7 @@ public class TradeOrderServiceImpl extends ServiceImpl<TradeOrderMapper, TradeOr
                     CastException.cast(ShopCode.SHOP_USER_NO_EXIST);
                 }
                 //比较订单价格是否大于用户账户余额
-                if (user.getUserMoney().compareTo(order.getMoneyPaid()) == -1) {
+                if (user.getUserMoney().compareTo(order.getOrderAmount()) == -1) {
                     CastException.cast(ShopCode.SHOP_MONEY_PAID_INVALID);
                 }
                 order.setMoneyPaid(order.getMoneyPaid());
@@ -251,8 +251,14 @@ public class TradeOrderServiceImpl extends ServiceImpl<TradeOrderMapper, TradeOr
             order.setMoneyPaid(BigDecimal.ZERO);
         }
         //计算订单支付总价
-        order.setPayAmount(orderAmount.subtract(order.getCouponPaid())
-                .subtract(order.getMoneyPaid()));
+        if(orderAmount.subtract(order.getCouponPaid())
+                .subtract(order.getMoneyPaid()).longValue()<0){
+            orderAmount= BigDecimal.valueOf(0);
+        }else{
+            orderAmount=orderAmount.subtract(order.getCouponPaid())
+                    .subtract(order.getMoneyPaid());
+        }
+        order.setPayAmount(orderAmount);
         //设置订单添加时间
         order.setAddTime(new Date());
 
@@ -290,7 +296,7 @@ public class TradeOrderServiceImpl extends ServiceImpl<TradeOrderMapper, TradeOr
             CastException.cast(ShopCode.SHOP_ORDER_INVALID);
         }
         //2.校验订单中的商品是否存在
-        // TODO 这几个位置可以稍微缓存一下，不用去查数据库
+        // TODO  这几个位置可以稍微缓存一下，不用去查数据库
         TradeGoods goods = goodsService.getById(order.getGoodsId());
         if (goods == null) {
             CastException.cast(ShopCode.SHOP_GOODS_NO_EXIST);

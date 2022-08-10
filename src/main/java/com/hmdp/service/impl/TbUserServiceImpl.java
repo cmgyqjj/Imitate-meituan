@@ -224,7 +224,6 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
         userInfoService.save(userInfo);
         // 2.保存用户
         boolean save = save(user);
-        save=save;
         return user;
     }
 

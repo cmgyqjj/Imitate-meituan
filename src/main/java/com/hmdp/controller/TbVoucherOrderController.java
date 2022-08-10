@@ -1,6 +1,7 @@
 package com.hmdp.controller;
 
 
+import com.hmdp.aop.RemoveHttpPost;
 import com.hmdp.dto.Result;
 import com.hmdp.service.TbVoucherOrderService;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ public class TbVoucherOrderController {
 
 
     @PostMapping("seckill/{id}")
+    @RemoveHttpPost
     public Result seckillVoucher(@PathVariable("id") Long voucherId) {
         return voucherOrderService.seckillVoucher(voucherId);
     }
