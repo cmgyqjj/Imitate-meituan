@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="user" />
         <module name="hm-dianping" />
+        <module name="Imitate-meituan" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -17,6 +18,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Imitate-meituan" options="-parameters" />
       <module name="hm-dianping" options="-parameters" />
       <module name="user" options="-parameters" />
     </option>
