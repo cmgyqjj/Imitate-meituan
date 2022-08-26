@@ -35,8 +35,18 @@ public class XssRequestWrapper extends HttpServletRequestWrapper {
         return text;
     }
 
+//    运用过滤方法进行过滤
     @Override
     public String[] getParameterValues(String name) {
-        return super.getParameterValues(name);
+        String[] parameterValues = super.getParameterValues(name);
+        String[] clearParameterValues=new String[parameterValues.length];
+        if(parameterValues==null){
+            return null;
+        }else{
+            for (int i = 0; i < parameterValues.length; i++) {
+                clearParameterValues[i]=cleanXss(parameterValues[i]);
+            }
+        }
+        return clearParameterValues;
     }
 }
