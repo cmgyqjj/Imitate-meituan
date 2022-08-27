@@ -42,6 +42,7 @@ public class CouponCancelMQListener implements RocketMQListener<MessageExt> {
             log.info("回退优惠卷成功");
         }catch (Exception e){
             e.printStackTrace();
+            log.info("test");
             log.error("回退优惠卷失败");
         }
     }
