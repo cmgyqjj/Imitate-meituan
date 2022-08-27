@@ -38,11 +38,10 @@ public class CouponCancelMQListener implements RocketMQListener<MessageExt> {
                 coupon.setIsUsed(ShopCode.SHOP_COUPON_UNUSED.getCode());
                 coupon.setOrderId(null);
                 tradeCouponMapper.updateById(coupon);
+                log.info("回退优惠卷成功");
             }
-            log.info("回退优惠卷成功");
         }catch (Exception e){
             e.printStackTrace();
-            log.info("test");
             log.error("回退优惠卷失败");
         }
     }

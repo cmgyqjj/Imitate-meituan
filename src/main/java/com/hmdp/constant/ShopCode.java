@@ -92,8 +92,6 @@ public enum ShopCode {
     SHOP_PAYMENT_IS_PAID(false,70002,"支付订单已支付"),
     //订单付款失败
     SHOP_PAYMENT_PAY_ERROR(false,70002,"订单支付失败");
-
-
     Boolean success;
     Integer code;
     String message;
